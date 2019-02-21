@@ -47,14 +47,15 @@ namespace Game
             EasyJoystick.On_JoystickMoveEnd += JoystickMoveEnd;
         }
 
-       
 
+        float camPosX = 0;
         /// <summary>
         /// 虚拟摇杆移动时
         /// </summary>
         /// <param name="move"></param>
         void JoystickMove(MovingJoystick move)
         {
+            
             if (move.joystickName == "MoveJoystick")
             {
                 if (!Player.Instance.canMove)
@@ -66,14 +67,36 @@ namespace Game
 
                 if (joyPosX != 0 || joyPosY != 0)
                 {
-                    Vector3 direct = new Vector3(joyPosX , 0, joyPosY );
+                    Debug.Log("joyPosX:" + joyPosX);
+                    Debug.Log("joyPosY:" + joyPosY);
+                   
+                    Vector3 direct = new Vector3(joyPosX, 0, joyPosY);
                     this.transform.rotation = Quaternion.LookRotation(direct);
                     this.transform.GetComponent<CharacterController>().Move(transform.rotation * new Vector3(0, 0, Time.deltaTime * Player.Instance.moveSpe));
                     Player.Instance.arrowModel.transform.rotation = transform.rotation;
                     Player.Instance.Move();
                 }
             }
-            
+            if (move.joystickName == "SkillJoystick")
+            {
+                float joyPosX = move.joystickAxis.x;
+                float joyPosY = move.joystickAxis.y;
+
+                if (joyPosX != 0 || joyPosY != 0)
+                {
+                    Vector3 direct = new Vector3(joyPosX, 0, joyPosY);
+                    ShanxianRange.transform.rotation = Quaternion.LookRotation(direct);
+                }
+            }
+            if (move.joystickName == "CameraJoystick")
+            {
+                float joyPosX = move.joystickAxis.x;
+                if (joyPosX != 0)
+                {
+                    camPosX += joyPosX;
+                    Camera.main.transform.RotateAround(this.transform.position, this.transform.up, joyPosX);
+                }
+            }
         }
         /// <summary>
         /// 虚拟摇杆结束时
@@ -84,6 +107,10 @@ namespace Game
             if(move.joystickName == "MoveJoystick")
             {
                 Player.Instance.Idel();
+            }
+            if (move.joystickName == "CameraJoystick")
+            {
+                camPosX = 0;
             }
         }
 

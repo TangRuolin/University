@@ -6,6 +6,10 @@ TagManager:
   tags:
   - GuiCamera
   - GameManager
+  - Map
+  - Skill
+  - Undefined
+  - AI
   layers:
   - Default
   - TransparentFX

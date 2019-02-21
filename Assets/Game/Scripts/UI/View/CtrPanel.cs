@@ -128,6 +128,7 @@ namespace Game
                 StartCoroutine(CDTimeCount(index));
                 skillMask[index].SetActive(true);
                 Player.Instance.UseEngine(skillEnegNum[index]);
+                closeSkill.SetActive(false);
             }
         }
         private void SkillBtnDown()
@@ -194,11 +195,11 @@ namespace Game
         {
             if (isSkill[2])
             {
-                EasyJoystick.On_JoystickMove -= JoystickMove;
+               // EasyJoystick.On_JoystickMove -= JoystickMove;
                 SkiilJoystick.GetComponent<EasyJoystick>().areaColor = new Color32(255, 255, 255, 0);
                 SkiilJoystick.GetComponent<EasyJoystick>().touchColor = new Color32(255, 255, 255, 0);
                 ShanxianRange.SetActive(false);
-                closeSkill.SetActive(false);
+                
                 if (!isClose)
                 {
                     Player.Instance.Flash(ShanxianRange.transform.rotation);
@@ -214,7 +215,7 @@ namespace Game
                 SkiilJoystick.GetComponent<EasyJoystick>().areaColor = new Color32(255, 255, 255, 255);
                 SkiilJoystick.GetComponent<EasyJoystick>().touchColor = new Color32(255, 255, 255, 255);
                 StartCoroutine(SkillBtnSmall(skill[2]));
-                EasyJoystick.On_JoystickMove += JoystickMove;
+               // EasyJoystick.On_JoystickMove += JoystickMove;
                 ShanxianRange.SetActive(true);
                 SkillBtnDown();
             }
@@ -353,7 +354,7 @@ namespace Game
         {
             CameraJoystick.GetComponent<EasyJoystick>().areaColor = new Color32(255, 255, 255, 255);
             CameraJoystick.GetComponent<EasyJoystick>().touchColor = new Color32(255, 255, 255, 255);
-            EasyJoystick.On_JoystickMove += JoystickMove;
+           // EasyJoystick.On_JoystickMove += JoystickMove;
         }
         public void CameraBtnUp()
         {
@@ -361,7 +362,7 @@ namespace Game
             CameraJoystick.GetComponent<EasyJoystick>().touchColor = new Color32(255, 255, 255, 0);
             Camera.main.transform.position = CameraPos.position;
             Camera.main.transform.rotation = CameraPos.rotation;
-            EasyJoystick.On_JoystickMove -= JoystickMove;
+            // EasyJoystick.On_JoystickMove -= JoystickMove;
         }
 
 
