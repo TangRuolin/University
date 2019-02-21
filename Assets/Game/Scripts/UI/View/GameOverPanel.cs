@@ -17,11 +17,11 @@ namespace Game
             maxPanel = transform.Find("MaxPanel").gameObject;
             transform.Find("Back").GetComponent<Button>().onClick.AddListener(delegate() { BtnClick("Main"); });
             transform.Find("ReStart").GetComponent<Button>().onClick.AddListener(delegate () { BtnClick("Game"); });
-            float score = ScoreMgr.Instance.GetScore();
+            int score = ScoreMgr.Instance.GetScore();
             if(score > ScoreMgr.Instance.GetMaxScore())
             {
                 maxPanel.SetActive(true);
-                ScoreMgr.Instance.StoreScore();
+                ScoreMgr.Instance.StoreScore(score);
             }
             transform.Find("Score").GetComponent<Text>().text = ((int)score).ToString();
         }

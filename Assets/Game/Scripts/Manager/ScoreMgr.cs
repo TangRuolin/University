@@ -44,9 +44,10 @@ namespace Game
         /// <summary>
         /// 存储最高分
         /// </summary>
-        public void StoreScore()
+        public void StoreScore(int score)
         {
-            PlayerPrefs.SetInt("maxScore",score);
+            maxScore = score;
+            PlayerPrefs.SetInt("maxScore",maxScore);
         }
 
         /// <summary>
@@ -71,6 +72,8 @@ namespace Game
         {
             return score;
         }
+
+       
     }
 
 }

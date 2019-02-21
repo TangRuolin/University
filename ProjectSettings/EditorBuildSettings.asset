@@ -6,17 +6,17 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/LuaFramework/Scenes/main.unity
+    path: 
     guid: 75eee5e7009aba84192cfcdff8590f2a
   - enabled: 1
-    path: Assets/Game/Scenes/Game.unity
-    guid: 00000000000000000000000000000000
+    path: Assets/Game/Scenes/Logo.unity
+    guid: 8756d85f15680744dba5017b0008f27f
   - enabled: 1
     path: Assets/Game/Scenes/Load.unity
-    guid: 00000000000000000000000000000000
+    guid: bf4de75fc261e554196be838f94bf6e0
   - enabled: 1
-    path: Assets/Game/Scenes/Logo.unity
-    guid: 00000000000000000000000000000000
+    path: Assets/Game/Scenes/Game.unity
+    guid: bd8abda48fa9a064ab97ad60da32b4d4
   - enabled: 1
     path: Assets/Game/Scenes/Main.unity
-    guid: 00000000000000000000000000000000
+    guid: f36de913c12e1c644a8995f6f343e3dc

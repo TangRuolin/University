@@ -12,10 +12,11 @@ namespace Game
 
         private AsyncOperation async;
         private IEnumerator ienum;
+        private bool hasLoad;
         // Use this for initialization
         private void OnEnable()
         {
-
+            hasLoad = false;
             time = 0;
             this.transform.Find("renwu").GetComponent<Image>().sprite = LoadCtr.Instance.GetBgImage();
             this.transform.Find("renwu").GetComponent<Image>().SetNativeSize();
@@ -27,44 +28,99 @@ namespace Game
                 StopCoroutine(ienum);
             }
             ienum = LoadScene(LoadCtr.Instance.sceneName);
-           
+            
         }
-
+        private void Start()
+        {
+            StartCoroutine(ienum);
+        }
         IEnumerator LoadScene(string name)
         {
             async = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(name);
             async.allowSceneActivation = false;
             yield return async;
-
+            //while (!async.isDone)
+            //{
+            //    if (async.progress < 0.9f)
+            //        processBar.fillAmount = async.progress;
+            //    else
+            //    {
+            //        //processBar.fillAmount = 1.0f;
+            //        async.allowSceneActivation = true;
+            //    }
+                    
+            //    yield return null;
+            //}
+            //while (async.isDone)
+            //{
+            //    processBar.fillAmount = async.progress;
+            //}
+          
         }
         float num;
         float time;
         void Update()
         {
-            if(ienum != null)
-            {
-                StartCoroutine(ienum);
-                ienum = null;
-            }
-            if (async == null)
-            {
-                return;
-            }
+            //if (ienum != null)
+            //{
+
+            //    ienum = null;
+            //}
+            //if (async == null)
+            //{
+            //    return;
+            //}
+            //num = async.progress;
+            //time += Time.deltaTime * 100;
+            //if (time > 100)
+            //{
+            //    async.allowSceneActivation = true;
+            //}
+            //else
+            //{
+            //    if (!hasLoad)
+            //    {
+            //        processBar.fillAmount = 1;
+
+            //        hasLoad = true;
+            //    }
+
+
+            //}
             num = async.progress;
-            time += Time.deltaTime * 100;
-            if (time < 90)
+
+            if (async.progress >= 0.9f)
             {
-                processBar.fillAmount = time / 100;
+                //operation.progress的值最大为0.9
+                num = 1.0f;
             }
-            else
+
+            if (num != processBar.fillAmount)
             {
-                processBar.fillAmount = 1;
-                StartCoroutine(LoadSucc());
+                //插值运算
+                processBar.fillAmount = Mathf.Lerp(processBar.fillAmount, num, Time.deltaTime * 1);
+                if (Mathf.Abs(processBar.fillAmount - num) < 0.01f)
+                {
+                    processBar.fillAmount = num;
+                }
             }
+
+            //loadingText.text = ((int)(loadingSlider.value * 100)).ToString() + "%";
+
+            if ((int)(processBar.fillAmount * 100) == 100)
+            {
+                //允许异步加载完毕后自动切换场景
+                async.allowSceneActivation = true;
+            }
+
+           
+
+
+
         }
         IEnumerator LoadSucc()
         {
-            yield return new WaitForSeconds(0.8f);
+            yield return new WaitForSeconds(0.001f);
             async.allowSceneActivation = true;
         }
        

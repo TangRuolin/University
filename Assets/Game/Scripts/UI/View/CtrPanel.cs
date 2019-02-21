@@ -28,9 +28,11 @@ namespace Game
         private List<bool> isSkill = new List<bool>();
         private List<bool> isEnegineEnthough = new List<bool>();
         private Transform CameraPos;
+        bool isClose;
         // Use this for initialization
         void Start()
         {
+            isClose = false;
             CameraPos = GameObject.Find("CameraPos").transform;
             _player = GameObject.Find("Player");
             arrowModel = Player.Instance.arrowModel;
@@ -117,13 +119,22 @@ namespace Game
             skillMask[index].SetActive(false);
             isSkill[index] = true;
         }
-        private void SkillBtnDown(int index)
+        private void SkillBtnUp(int index)
         {
             StartCoroutine(SkillBtnBig(skill[index]));
-            isSkill[index] = false;
-            StartCoroutine(CDTimeCount(index));
-            skillMask[index].SetActive(true);
-            Player.Instance.UseEngine(skillEnegNum[index]);
+            if (!isClose)
+            {
+                isSkill[index] = false;
+                StartCoroutine(CDTimeCount(index));
+                skillMask[index].SetActive(true);
+                Player.Instance.UseEngine(skillEnegNum[index]);
+            }
+        }
+        private void SkillBtnDown()
+        {
+            isClose = false;
+            closeSkill.SetActive(true);
+            ShanxianRange.transform.GetChild(0).GetComponent<Projector>().material.SetColor("_Color", blud);
         }
 
         /// <summary>
@@ -133,17 +144,21 @@ namespace Game
         {
             if (isSkill[0])
             {
-                StartCoroutine(AddMoveSpd(0));
-                SkillBtnDown(0);
-
+                if(!isClose)
+                   StartCoroutine(AddMoveSpd(0));
+                SkillBtnUp(0);
             }
         }
 
-
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
         public void Skill1Down()
         {
-            if(isSkill[0])
-                StartCoroutine(SkillBtnSmall(skill[0]));
+            if (isSkill[0])
+            {
+                StartCoroutine(SkillBtnSmall(skill[0]));  
+                SkillBtnDown();
+            }
+                
         }
 
 
@@ -155,14 +170,19 @@ namespace Game
         {
             if (isSkill[1])
             {
-                StartCoroutine(AddAttackSpd(1));
-                SkillBtnDown(1);
+                if (!isClose)
+                    StartCoroutine(AddAttackSpd(1));
+                SkillBtnUp(1);
             }
         }
         public void Skill2Down()
         {
-            if(isSkill[1])
+            if (isSkill[1])
+            {
                 StartCoroutine(SkillBtnSmall(skill[1]));
+                SkillBtnDown();
+            }
+                
         }
 
         float attackUnit;
@@ -179,11 +199,11 @@ namespace Game
                 SkiilJoystick.GetComponent<EasyJoystick>().touchColor = new Color32(255, 255, 255, 0);
                 ShanxianRange.SetActive(false);
                 closeSkill.SetActive(false);
-                if (isFlash)
+                if (!isClose)
                 {
                     Player.Instance.Flash(ShanxianRange.transform.rotation);
                 }
-                SkillBtnDown(2);
+                SkillBtnUp(2);
             }
            
         }
@@ -196,8 +216,7 @@ namespace Game
                 StartCoroutine(SkillBtnSmall(skill[2]));
                 EasyJoystick.On_JoystickMove += JoystickMove;
                 ShanxianRange.SetActive(true);
-                closeSkill.SetActive(true);
-                isFlash = true;
+                SkillBtnDown();
             }
             
         }
@@ -319,13 +338,12 @@ namespace Game
         public void CloseEnter()
         {
             ShanxianRange.transform.GetChild(0).GetComponent<Projector>().material.SetColor("_Color",red);
-            isFlash = false;
-
+            isClose = true;
         }
         public void CloseExit()
         {
             ShanxianRange.transform.GetChild(0).GetComponent<Projector>().material.SetColor("_Color", blud);
-            isFlash = true;
+            isClose = false;
         }
 
         /// <summary>

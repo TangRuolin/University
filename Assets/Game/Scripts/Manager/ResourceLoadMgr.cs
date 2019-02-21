@@ -98,6 +98,7 @@ namespace Game
             EnegineParent = ab.LoadAsset<GameObject>("EnegineParent").transform;
             Enegine = ab.LoadAsset<GameObject>("Enegine");
             ab.Unload(false);
+            Debug.Log(monsterModel.tag);
             EventMgr.Instance.Trigger((int)EventID.UtilsEvent.StopCoroutine, loadResourceContent);
         }
 
@@ -123,7 +124,10 @@ namespace Game
             string[] name = JsonMgr.Instance.contentInfo.audioName;
             foreach (var i in name)
             {
-                audioMap.Add(i,ab.LoadAsset<AudioClip>(i));
+                AudioClip a = ab.LoadAsset<AudioClip>(i);
+                //if (a == null) Debug.Log("dfdfdf") ;
+                
+                audioMap.Add(i,a);
             }
             ab.Unload(false);
             EventMgr.Instance.Trigger((int)EventID.UtilsEvent.StopCoroutine, loadResourceAudio);
@@ -143,6 +147,7 @@ namespace Game
             yield return requst;
             AssetBundle ab = requst.assetBundle;
             playerVoice = ab.LoadAllAssets<AudioClip>();
+            
             ab.Unload(false);
             EventMgr.Instance.Trigger((int)EventID.UtilsEvent.StopCoroutine, loadPlayerVoice);
         }

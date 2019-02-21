@@ -283,13 +283,16 @@ namespace Game
             EventMgr.Instance.Trigger((int)EventID.AudioEvent.Arrow,(object)true);
             while(distance < Const.arrowMoveDis)
             {
+                Debug.Log("ccc");
                 nowPos = lineCast.position;
                 RaycastHit hit;
                 if (Physics.Linecast(prePos, nowPos,out hit))
                 {
-                    if(hit.collider.tag == "AI")
+                    Debug.Log("bbb");
+                    if (hit.collider.tag == "AI")
                     {
                         MonsterDamage(hit.collider.gameObject);
+                        Debug.Log("aaa");
                         arrow.SetActive(false);
                         break;
                     }
@@ -405,7 +408,6 @@ namespace Game
         public void GameOver()
         {
             EventMgr.Instance.Trigger((int)EventID.UtilsEvent.StopCoroutine,arrowMove);
-
         }
 
     }
