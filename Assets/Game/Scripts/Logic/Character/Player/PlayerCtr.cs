@@ -25,17 +25,17 @@ namespace Game
         }
 
         //测试专用
-        //private void Update()
-        //{
-        //    if (Input.GetKey(KeyCode.A))
-        //    {
-        //        Vector3 direct = new Vector3(10, 0, 10);
-        //        this.transform.rotation = Quaternion.LookRotation(direct);
-        //        this.transform.GetComponent<CharacterController>().Move(transform.rotation * new Vector3(0, 0, Time.deltaTime * Player.Instance.moveSpe));
-        //        Player.Instance.arrowModel.transform.rotation = transform.rotation;
-        //        Player.Instance.Move();
-        //    }
-        //}
+        private void Update()
+        {
+            if (Input.GetKey(KeyCode.A))
+            {
+                Vector3 direct = new Vector3(0, 0, 1);
+                this.transform.rotation = Quaternion.LookRotation(direct);
+                this.transform.GetComponent<CharacterController>().Move(transform.rotation * new Vector3(0, 0, Time.deltaTime * Player.Instance.moveSpe));
+                Player.Instance.arrowModel.transform.rotation = transform.rotation;
+                Player.Instance.Move();
+            }
+        }
 
         /// <summary>
         /// 赋予虚拟摇杆移动事件
@@ -48,7 +48,9 @@ namespace Game
         }
 
 
-        float camPosX = 0;
+        float oldCamPosX = 0;
+        float offset = 0;
+        float playerOffset = 0;
         /// <summary>
         /// 虚拟摇杆移动时
         /// </summary>
@@ -67,11 +69,10 @@ namespace Game
 
                 if (joyPosX != 0 || joyPosY != 0)
                 {
-                    Debug.Log("joyPosX:" + joyPosX);
-                    Debug.Log("joyPosY:" + joyPosY);
-                   
                     Vector3 direct = new Vector3(joyPosX, 0, joyPosY);
                     this.transform.rotation = Quaternion.LookRotation(direct);
+                    Vector3 rotation = transform.rotation.eulerAngles + new Vector3(0, playerOffset, 0);
+                    transform.rotation = Quaternion.Euler(rotation);
                     this.transform.GetComponent<CharacterController>().Move(transform.rotation * new Vector3(0, 0, Time.deltaTime * Player.Instance.moveSpe));
                     Player.Instance.arrowModel.transform.rotation = transform.rotation;
                     Player.Instance.Move();
@@ -86,15 +87,19 @@ namespace Game
                 {
                     Vector3 direct = new Vector3(joyPosX, 0, joyPosY);
                     ShanxianRange.transform.rotation = Quaternion.LookRotation(direct);
+                    Vector3 rotation = ShanxianRange.transform.rotation.eulerAngles + new Vector3(0, playerOffset, 0);
+                    ShanxianRange.transform.rotation = Quaternion.Euler(rotation);
                 }
             }
             if (move.joystickName == "CameraJoystick")
             {
                 float joyPosX = move.joystickAxis.x;
-                if (joyPosX != 0)
+                offset = (joyPosX - oldCamPosX)*180;
+                if (offset != 0)
                 {
-                    camPosX += joyPosX;
-                    Camera.main.transform.RotateAround(this.transform.position, this.transform.up, joyPosX);
+                    Camera.main.transform.RotateAround(this.transform.position, this.transform.up, offset);
+                    oldCamPosX = joyPosX;
+                    playerOffset += offset;
                 }
             }
         }
@@ -110,7 +115,8 @@ namespace Game
             }
             if (move.joystickName == "CameraJoystick")
             {
-                camPosX = 0;
+                oldCamPosX = 0;
+                offset = 0;
             }
         }
 

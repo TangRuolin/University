@@ -398,7 +398,7 @@ namespace Game
         {
             for(int i = 0; i < 30; i++)
             {
-                go.transform.GetComponent<CharacterController>().Move(go.transform.rotation * new Vector3(0, 0, Time.deltaTime*30));
+                go.transform.GetComponent<CharacterController>().Move(go.transform.rotation * new Vector3(0, 0, Time.deltaTime*20));
                 yield return new WaitForSeconds(0.01f);
 
             }

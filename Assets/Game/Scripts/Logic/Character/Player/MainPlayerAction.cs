@@ -7,7 +7,7 @@ namespace Game
     public class MainPlayerAction : MonoBehaviour
     {
 
-
+        public GameObject soundObject;
         float time = 0;//用于计算改变动画的时间
         bool touch;//用于防止多次触屏导致动作错误
         Animator anim;
@@ -16,7 +16,7 @@ namespace Game
         {
             anim = GetComponent<Animator>();
             touch = true;
-            sound = GetComponent<AudioSource>();
+            sound = soundObject.GetComponent<AudioSource>();
         }
 
         private void Update()

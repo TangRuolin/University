@@ -14,29 +14,23 @@ namespace Game
         //private float nowBlood;
         //private float fullBlood;
         // Use this for initialization
-       
+        private float time;
         public void Init()
         {
-            //nowBlood = aiCtr.blood;
-            //fullBlood = aiCtr.fullBlood;
+            time = 0;
             bar.fillAmount = aiCtr.blood / aiCtr.fullBlood;
             num.text = aiCtr.blood.ToString();
         }
 
         // Update is called once per frame
-        //void Update()
-        //{
-        //    if(nowBlood != aiCtr.blood)
-        //    {
-        //        nowBlood = aiCtr.blood;
-        //        bar.fillAmount = nowBlood / fullBlood;
-        //        num.text = string.Format("%d", nowBlood);
-        //    }
-        //    if(nowBlood == 0)
-        //    {
-        //        this.gameObject.SetActive(false);
-        //    }
-        //}
+        void Update()
+        {
+            time += Time.deltaTime;
+            if(time > Const.ShowBloodPanel)
+            {
+                this.gameObject.SetActive(false);
+            }
+        }
     }
 }
 

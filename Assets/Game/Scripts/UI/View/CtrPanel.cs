@@ -128,8 +128,8 @@ namespace Game
                 StartCoroutine(CDTimeCount(index));
                 skillMask[index].SetActive(true);
                 Player.Instance.UseEngine(skillEnegNum[index]);
-                closeSkill.SetActive(false);
             }
+            closeSkill.SetActive(false);
         }
         private void SkillBtnDown()
         {
@@ -360,8 +360,8 @@ namespace Game
         {
             CameraJoystick.GetComponent<EasyJoystick>().areaColor = new Color32(255, 255, 255, 0);
             CameraJoystick.GetComponent<EasyJoystick>().touchColor = new Color32(255, 255, 255, 0);
-            Camera.main.transform.position = CameraPos.position;
-            Camera.main.transform.rotation = CameraPos.rotation;
+            //Camera.main.transform.position = CameraPos.position;
+            //Camera.main.transform.rotation = CameraPos.rotation;
             // EasyJoystick.On_JoystickMove -= JoystickMove;
         }
 

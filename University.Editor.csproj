@@ -168,7 +168,6 @@
     <Compile Include="Assets\Game\Art\3dModel\Environment\Toon_Level_Kit\Resources\Scripts\Editor\ButterflyInspector.cs" />
     <Compile Include="Assets\Game\Art\3dModel\Environment\Toon_Level_Kit\Resources\Scripts\Editor\MaxAtlasSize.cs" />
     <Compile Include="Assets\Game\Art\3dModel\Environment\Top Down Mobile\tools scripts\Editor\TerrainRandEditor.cs" />
-    <Compile Include="Assets\Unity-Logs-Viewer\Reporter\Editor\ReporterEditor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Demigiant\DOTween\DOTween.XML" />
