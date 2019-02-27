@@ -98,7 +98,6 @@ namespace Game
             EnegineParent = ab.LoadAsset<GameObject>("EnegineParent").transform;
             Enegine = ab.LoadAsset<GameObject>("Enegine");
             ab.Unload(false);
-            Debug.Log(monsterModel.tag);
             EventMgr.Instance.Trigger((int)EventID.UtilsEvent.StopCoroutine, loadResourceContent);
         }
 

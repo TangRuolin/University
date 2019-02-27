@@ -19,12 +19,12 @@ namespace Game
                 if (_instance == null)
                 {
                     _instance = new Player();
-                    _instance.Init();
+                    _instance.Init();//新建的同时初始化
                 }
                 return _instance;
             }
         }
-        public GameObject go;
+        public GameObject go;//对象
         private float enegine; // 蓝
         public float blood;    //血量
         private float attackNum;//玩家的攻击伤害
@@ -33,18 +33,18 @@ namespace Game
         //public int _attackNum { get; private set; }  //攻击次数，用于判断有没有触发强力攻击
         public float moveSpe { get; private set; }  //玩家移动速度
         public bool isMoveQuick;    //玩家是否快速移动
-        public bool isAttackQuick;
-        public bool canMove { get; set; }
-        private List<GameObject> arrows;
-        public GameObject arrowModel;
-        public Transform arrowPos;
-        private IEnumerator arrowMove;
+        public bool isAttackQuick;//玩家是否快速攻击
+        public bool canMove { get; set; }//角色是否能移动
+        private List<GameObject> arrows;//箭矢池
+        public GameObject arrowModel;//箭矢模型
+        public Transform arrowPos;//箭矢位置
+        private IEnumerator arrowMove;//箭矢的移动
         private List<MonsterMeg> monsterList;//可攻击敌人列表
 
         private Transform lineCast;//箭矢的轨迹
-        private Vector3 prePos;
-        private Vector3 nowPos;
-        private AudioClip[] playerVoice;
+        private Vector3 prePos;//先前的位置
+        private Vector3 nowPos;//现在的位置
+        private AudioClip[] playerVoice;//声音音频
 
 
 
@@ -283,16 +283,13 @@ namespace Game
             EventMgr.Instance.Trigger((int)EventID.AudioEvent.Arrow,(object)true);
             while(distance < Const.arrowMoveDis)
             {
-                Debug.Log("ccc");
                 nowPos = lineCast.position;
                 RaycastHit hit;
                 if (Physics.Linecast(prePos, nowPos,out hit))
                 {
-                    Debug.Log("bbb");
                     if (hit.collider.tag == "AI")
                     {
                         MonsterDamage(hit.collider.gameObject);
-                        Debug.Log("aaa");
                         arrow.SetActive(false);
                         break;
                     }
